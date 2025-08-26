@@ -5,6 +5,7 @@
 
     /* Modules */
     "module": "commonjs",
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
 
