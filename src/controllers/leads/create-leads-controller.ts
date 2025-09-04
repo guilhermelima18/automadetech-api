@@ -23,8 +23,11 @@ class CreateLeadsController {
 
       return reply.code(200).send({ data: createLeads });
     } catch (error: any) {
-      if (error.message === "Não foi possível criar o lead!") {
-        return reply.status(400).send({ error: error.message });
+      if (
+        error.message === "Não foi possível criar o lead!" ||
+        error.message === "O e-mail já existe na coleção!"
+      ) {
+        return reply.status(400).send({ error: true, message: error.message });
       }
 
       return reply.status(500).send({ error: "Erro interno do servidor." });

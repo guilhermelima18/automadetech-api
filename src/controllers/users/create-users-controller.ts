@@ -27,7 +27,7 @@ class CreateUsersController {
       return reply.code(200).send({ data: createUsers });
     } catch (error: any) {
       if (error.message === "Não foi possível criar o usuário!") {
-        return reply.status(400).send({ error: error.message });
+        return reply.status(400).send({ error: true, message: error.message });
       }
 
       return reply.status(500).send({ error: "Erro interno do servidor." });
