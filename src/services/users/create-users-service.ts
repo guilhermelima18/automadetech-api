@@ -1,12 +1,12 @@
 import admin from "firebase-admin";
 
-interface ICreateUserService {
+interface ICreateUsersService {
   email: string;
   password: string;
 }
 
-class CreateUserService {
-  async execute({ email, password }: ICreateUserService) {
+class CreateUsersService {
+  async execute({ email, password }: ICreateUsersService) {
     const db = admin.firestore();
 
     const docRef = await db.collection("users").add({ email, password });
@@ -19,4 +19,4 @@ class CreateUserService {
   }
 }
 
-export { CreateUserService };
+export { CreateUsersService };

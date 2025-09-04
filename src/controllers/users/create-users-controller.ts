@@ -1,16 +1,16 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
-import { CreateUserService } from "../../services/users/create-user-service";
+import { CreateUsersService } from "../../services/users/create-users-service";
 
-const authSchema = z.object({
+const usersSchema = z.object({
   email: z.string().email(),
   password: z.string(),
 });
 
-class CreateUserController {
+class CreateUsersController {
   async handle(request: FastifyRequest, reply: FastifyReply) {
     try {
-      const { success, data } = authSchema.safeParse(request.body);
+      const { success, data } = usersSchema.safeParse(request.body);
 
       if (!success) {
         return reply
@@ -18,16 +18,14 @@ class CreateUserController {
           .send({ error: "E-mail e password são obrigatórios." });
       }
 
-      const createUserService = new CreateUserService();
-      const createUser = await createUserService.execute({
+      const createUsersService = new CreateUsersService();
+      const createUsers = await createUsersService.execute({
         email: data.email,
         password: data.password,
       });
 
-      return reply.code(200).send({ data: createUser });
+      return reply.code(200).send({ data: createUsers });
     } catch (error: any) {
-      console.log(error);
-
       if (error.message === "Não foi possível criar o usuário!") {
         return reply.status(400).send({ error: error.message });
       }
@@ -37,4 +35,4 @@ class CreateUserController {
   }
 }
 
-export { CreateUserController };
+export { CreateUsersController };

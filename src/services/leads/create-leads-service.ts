@@ -1,0 +1,21 @@
+import admin from "firebase-admin";
+
+interface ICreateLeadsService {
+  email: string;
+}
+
+class CreateLeadsService {
+  async execute({ email }: ICreateLeadsService) {
+    const db = admin.firestore();
+
+    const docRef = await db.collection("leads").add({ email });
+
+    if (!docRef) {
+      throw new Error("Não foi possível criar o lead!");
+    }
+
+    return { id: docRef.id, message: "Lead criado com sucesso!" };
+  }
+}
+
+export { CreateLeadsService };

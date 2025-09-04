@@ -4,7 +4,8 @@ import admin from "firebase-admin";
 
 import firebaseService from "../automadetech-firebase.json";
 
-import { createUserRoute } from "./routes/users/create-user-route";
+import { createUsersRoute } from "./routes/users/create-users-route";
+import { createLeadsRoute } from "./routes/leads/create-lead-route";
 
 // Inicializa o Firebase Admin
 admin.initializeApp({
@@ -19,7 +20,8 @@ app.setErrorHandler((error, _, reply) => {
 
 const start = async () => {
   app.register(cors);
-  app.register(createUserRoute);
+  app.register(createUsersRoute);
+  app.register(createLeadsRoute);
 
   try {
     app
