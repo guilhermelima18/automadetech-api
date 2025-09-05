@@ -3,8 +3,8 @@ import fastify from "fastify";
 import cors from "@fastify/cors";
 import admin from "firebase-admin";
 
-import { createUsersRoute } from "../src/routes/users/create-users-route";
-import { createLeadsRoute } from "../src/routes/leads/create-lead-route";
+import { createUsersRoute } from "./routes/users/create-users-route";
+import { createLeadsRoute } from "./routes/leads/create-lead-route";
 
 // Inicializa o Firebase Admin (evita inicializar duas vezes)
 if (!admin.apps.length) {
@@ -19,17 +19,27 @@ if (!admin.apps.length) {
 
 const app = fastify();
 
-// Middleware e rotas
 app.setErrorHandler((error, _, reply) => {
   reply.code(400).send({ message: error.message });
 });
 
-app.register(cors);
-app.register(createUsersRoute);
-app.register(createLeadsRoute);
+const start = async () => {
+  app.register(cors);
+  app.register(createUsersRoute);
+  app.register(createLeadsRoute);
 
-// Handler para Vercel (sem listen!)
-export default async function handler(req: any, res: any) {
-  await app.ready(); // garante que tudo está registrado
-  app.server.emit("request", req, res);
-}
+  try {
+    app
+      .listen({
+        port: 3333,
+        host: "0.0.0.0",
+      })
+      .then(async () => {
+        console.log("Servidor rodando na porta: ", 3333);
+      });
+  } catch (error) {
+    console.log("Ocorreu um erro no servidor: ", error);
+  }
+};
+
+start();
