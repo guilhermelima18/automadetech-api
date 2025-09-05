@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
-    "build": "tsup src/server.ts --format esm,cjs --dts --out-dir dist",
-    "start": "node dist/server.js"
+    "dev": "vercel dev",
+    "build": "tsc"
   },
   "dependencies": {
     "@fastify/cors": "^10.0.1",

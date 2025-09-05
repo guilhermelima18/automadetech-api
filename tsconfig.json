@@ -1,16 +1,12 @@
 {
   "compilerOptions": {
-    /* Language and Environment */
-    "target": "es2020",
-
-    /* Modules */
+    "outDir": "dist",
     "module": "commonjs",
-    "resolveJsonModule": true,
+    "target": "es2019",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-
-    /* Type Checking */
+    "moduleResolution": "node",
     "strict": true,
     "skipLibCheck": true
-  }
+  },
+  "include": ["api", "src"]
 }
