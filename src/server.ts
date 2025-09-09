@@ -2,9 +2,11 @@ import "dotenv/config";
 import fastify from "fastify";
 import cors from "@fastify/cors";
 import admin from "firebase-admin";
+import cron from "node-cron";
 
 import { createUsersRoute } from "./routes/users/create-users-route";
 import { createLeadsRoute } from "./routes/leads/create-lead-route";
+import { SendLeadsEmailService } from "./services/leads/send-leads-email-service";
 
 // Inicializa o Firebase Admin (evita inicializar duas vezes)
 if (!admin.apps.length) {
@@ -18,6 +20,19 @@ if (!admin.apps.length) {
 }
 
 const app = fastify();
+
+// cron.schedule("*/1 * * * *", async () => {
+//  console.log("⏰ Executando cron job (envio de e-mails)...");
+//
+//  const sendLeadsEmailService = new SendLeadsEmailService();
+//
+//  try {
+//    await sendLeadsEmailService.execute();
+//    console.log("✅ E-mails enviados com sucesso!");
+//  } catch (error) {
+//    console.error("❌ Erro ao enviar e-mails:", error);
+//  }
+// });
 
 app.setErrorHandler((error, _, reply) => {
   reply.code(400).send({ message: error.message });
